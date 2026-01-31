@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const numbers = generateLottoNumbers();
             displayNumbers(numbers);
             drawButton.disabled = false;
-        }, 2000); // 2초 후 결과 표시
+        }, 500); // 0.5초 후 결과 표시
     });
 
     function generateLottoNumbers() {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ball.textContent = number;
                 ball.style.backgroundColor = getBallColor(number);
                 numbersContainer.appendChild(ball);
-            }, index * 300); // 순차적으로 공 표시
+            }, index * 100); // 순차적으로 공 표시
         });
     }
 
