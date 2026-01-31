@@ -11,8 +11,12 @@
         <h1 id="mood-text">오늘 기분 어때?</h1>
         <p id="mood-sentence">버튼을 눌러 당신의 기분을 확인해보세요.</p>
         <button id="change-mood-button">기분 확인하기</button>
+        <div class="music-uploader">
+            <label for="music-upload">음악 업로드:</label>
+            <input type="file" id="music-upload" accept="audio/*">
+            <audio id="music-player" controls></audio>
+        </div>
     </div>
-    <audio id="click-sound" src="https://www.soundjay.com/buttons/sounds/button-3.mp3" preload="auto"></audio>
     <script src="main.js"></script>
 </body>
 </html>

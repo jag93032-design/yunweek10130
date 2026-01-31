@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const moodText = document.getElementById('mood-text');
     const moodSentence = document.getElementById('mood-sentence');
     const changeMoodButton = document.getElementById('change-mood-button');
-    const clickSound = document.getElementById('click-sound');
+    const musicUpload = document.getElementById('music-upload');
+    const musicPlayer = document.getElementById('music-player');
     const body = document.body;
 
     const moods = [
@@ -47,10 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let lastMoodIndex = -1;
 
     changeMoodButton.addEventListener('click', () => {
-        // 사운드 재생
-        clickSound.currentTime = 0;
-        clickSound.play();
-
         // 중복되지 않는 랜덤 인덱스 선택
         let randomIndex;
         do {
@@ -69,5 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // 버튼 색상도 배경과 대비되게 변경
         changeMoodButton.style.backgroundColor = randomMood.textColor;
         changeMoodButton.style.color = randomMood.bgColor;
+    });
+
+    musicUpload.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const musicURL = URL.createObjectURL(file);
+            musicPlayer.src = musicURL;
+            musicPlayer.play();
+        }
     });
 });

@@ -53,3 +53,23 @@ p {
 #change-mood-button:active {
     transform: translateY(1px);
 }
+
+.music-uploader {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.music-uploader label {
+    font-size: 0.9rem;
+    margin-right: 10px;
+}
+
+#music-upload {
+    margin-bottom: 15px;
+}
+
+#music-player {
+    width: 100%;
+    margin-top: 10px;
+}
