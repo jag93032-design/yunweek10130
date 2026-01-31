@@ -1,64 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const themeToggle = document.getElementById('theme-toggle');
-    const drawButton = document.getElementById('draw-button');
-    const numbersContainer = document.querySelector('.lotto-numbers');
+    const moodText = document.getElementById('mood-text');
+    const moodSentence = document.getElementById('mood-sentence');
+    const changeMoodButton = document.getElementById('change-mood-button');
+    const clickSound = document.getElementById('click-sound');
+    const body = document.body;
 
-    // 테마 설정
-    themeToggle.addEventListener('change', () => {
-        document.body.classList.toggle('dark-mode', themeToggle.checked);
-        document.body.classList.toggle('light-mode', !themeToggle.checked);
-    });
-
-    // 초기 테마 설정
-    document.body.classList.add('light-mode');
-
-    // 번호 추첨
-    drawButton.addEventListener('click', () => {
-        drawButton.disabled = true;
-        numbersContainer.innerHTML = '';
-
-        // 애니메이션을 위한 임시 공 생성
-        for (let i = 0; i < 6; i++) {
-            const ball = document.createElement('div');
-            ball.classList.add('ball');
-            numbersContainer.appendChild(ball);
+    const moods = [
+        {
+            mood: '행복',
+            sentence: '세상은 가능성으로 가득 차 있어요!',
+            bgColor: '#f9c851',
+            textColor: '#333'
+        },
+        {
+            mood: '차분함',
+            sentence: '고요한 바다처럼 마음의 평화를 느껴보세요.',
+            bgColor: '#6ac8f2',
+            textColor: '#fff'
+        },
+        {
+            mood: '열정',
+            sentence: '오늘 당신의 열정을 불태울 시간이에요!',
+            bgColor: '#ff7f7f',
+            textColor: '#fff'
+        },
+        {
+            mood: '신비로움',
+            sentence: '미지의 세계를 탐험하는 상상을 해보세요.',
+            bgColor: '#a0a0e0',
+            textColor: '#fff'
+        },
+        {
+            mood: '활기',
+            sentence: '초록빛 자연처럼 생명력이 넘치는 하루!',
+            bgColor: '#b2d9a3',
+            textColor: '#333'
+        },
+        {
+            mood: '고요',
+            sentence: '잠시 모든 것을 잊고, 깊은 숨을 쉬어보세요.',
+            bgColor: '#aaa',
+            textColor: '#fff'
         }
+    ];
 
-        // 번호 추첨 및 애니메이션
-        setTimeout(() => {
-            const numbers = generateLottoNumbers();
-            displayNumbers(numbers);
-            drawButton.disabled = false;
-        }, 500); // 0.5초 후 결과 표시
+    let lastMoodIndex = -1;
+
+    changeMoodButton.addEventListener('click', () => {
+        // 사운드 재생
+        clickSound.currentTime = 0;
+        clickSound.play();
+
+        // 중복되지 않는 랜덤 인덱스 선택
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * moods.length);
+        } while (randomIndex === lastMoodIndex);
+        
+        lastMoodIndex = randomIndex;
+        const randomMood = moods[randomIndex];
+
+        // 텍스트와 스타일 변경
+        moodText.textContent = randomMood.mood;
+        moodSentence.textContent = randomMood.sentence;
+        body.style.backgroundColor = randomMood.bgColor;
+        body.style.color = randomMood.textColor;
+
+        // 버튼 색상도 배경과 대비되게 변경
+        changeMoodButton.style.backgroundColor = randomMood.textColor;
+        changeMoodButton.style.color = randomMood.bgColor;
     });
-
-    function generateLottoNumbers() {
-        const numbers = new Set();
-        while (numbers.size < 6) {
-            const randomNumber = Math.floor(Math.random() * 45) + 1;
-            numbers.add(randomNumber);
-        }
-        return Array.from(numbers).sort((a, b) => a - b);
-    }
-
-    function displayNumbers(numbers) {
-        numbersContainer.innerHTML = '';
-        numbers.forEach((number, index) => {
-            setTimeout(() => {
-                const ball = document.createElement('div');
-                ball.classList.add('ball', 'final');
-                ball.textContent = number;
-                ball.style.backgroundColor = getBallColor(number);
-                numbersContainer.appendChild(ball);
-            }, index * 100); // 순차적으로 공 표시
-        });
-    }
-
-    function getBallColor(number) {
-        if (number <= 10) return '#f9c851'; // 노란색
-        if (number <= 20) return '#6ac8f2'; // 파란색
-        if (number <= 30) return '#ff7f7f'; // 빨간색
-        if (number <= 40) return '#aaa';    // 회색
-        return '#b2d9a3'; // 녹색
-    }
 });
